@@ -63,6 +63,12 @@ export default () => {
                 Todos os direitos de imagem reservados para <a href="https://netflix.com" target="_blank"><strong>Netflix</strong></a><br/>
                 Todos os dados foram obtidos através do <a href="https://themoviedb.org" target="_blank"><strong>The Movie DB</strong></a>
             </footer>
+            
+            {movieList.length <= 0 &&
+                <div className="loading">
+                    <img src="https://i.gifer.com/origin/36/36527397c208b977fa3ef21f68c0f7b2.gif" alt="Carregando..."/>
+                </div>
+            }
         </div>
     );
 }
