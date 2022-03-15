@@ -8,4 +8,4 @@ A Netflix Homepage Clone made with ReactJS, HTML and CSS just to improve my skil
 - JavaScript;
 
 # ⭕ Preview
-https://img.shields.io/badge/PROJETO-CLIQUE%20AQUI-red?link=https://clonenetflixdmaxadu.netlify.app
+<img src="https://img.shields.io/badge/PROJETO-CLIQUE%20AQUI-red?link=https://clonenetflixdmaxadu.netlify.app"/>
