@@ -13,8 +13,5 @@ A Netflix Homepage Clone made with ReactJS, HTML and CSS just to improve my skil
 - JavaScript;
 
 # ✅ Status of the Project
-<<<<<<< HEAD
+
 <h4 align="center">🚧 Em construção...  🚧</h4>
-=======
-<h4 align="center">🚧 Em construção...  🚧</h4>
->>>>>>> 880fc330ddee9ec194e3d5bbcc6ed1fa20b498d8
