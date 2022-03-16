@@ -6,12 +6,12 @@ A Netflix Homepage Clone made with ReactJS, HTML and CSS just to improve my skil
   <img src="[![Netlify Status](https://api.netlify.com/api/v1/badges/7ac569fd-6c55-4ae3-91cb-12cddf19f7eb/deploy-status)](https://app.netlify.com/sites/clonenetflixdmaxadu/deploys)"/>
 </div>
 
-# 💻 Technologies
-- HTML;
-- CSS;
-- React;
-- JavaScript;
+<h2> 💻 Technologies </h2>
+➪ HTML;</br>
+➪ CSS; </br>
+➪ React; </br>
+➪ JavaScript; </br>
 
-# ✅ Status of the Project
+<h2> ✅ Status of the Project </h2>
 
 <h4 align="center">🚧 Em construção...  🚧</h4>
