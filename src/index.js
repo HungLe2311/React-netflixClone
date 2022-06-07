@@ -5,8 +5,8 @@ import Trending from "./components/TrendingPage";
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <App /> */}
-    <Trending />
+    <App />
+    {/* <Trending /> */}
   </React.StrictMode>,
   document.getElementById("root")
 );
