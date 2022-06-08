@@ -42,3 +42,8 @@ footer a {
   justify-content: center;
   align-items: center;
 }
+
+.content-404 {
+  margin-top: 10em;
+  text-align: center;
+}

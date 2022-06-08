@@ -1,36 +1,40 @@
 import React, { useEffect, useState } from "react";
 import Tmdb from "./Tmdb";
-import MovieRow from "./components/MovieRow";
-import FeaturedMovie from "./components/FeaturedMovie";
+import Movies from "./components/Movies";
+import TVShows from "./components/TVShows";
+import TrendingPage from "./components/TrendingPage";
 import Header from "./components/Header";
 import "./App.css";
+import { NetflixProvider } from "./context";
+import { Routes, Route, Link } from "react-router-dom";
+import Home from "./components/Home";
+import Error404 from "./components/Error404";
 
 export default () => {
   const [movieList, setMovieList] = useState([]);
   const [featuredData, setFeaturedData] = useState(null);
   const [blackHeader, setBalckHeader] = useState(false);
+  const [filmChosen, setFilmChosen] = useState();
 
   useEffect(() => {
     const loadAll = async () => {
-      /* pega a lista TODA de filmes */
+      /* nhận danh sách Home */
       let list = await Tmdb.getHomeList();
       setMovieList(list);
-      console.log(list);
-      /* pega o filme em DESTAQUE */
+      console.log("homeList", list);
+      /* chọn ngẫu nhiên phim Featured */
       let originals = list.filter((i) => i.slug === "originals");
-      let randomChoosen = Math.floor(
+      let randomChosen = Math.floor(
         Math.random() * (originals[0].items.results?.length - 1)
       );
-      let choosen = originals[0].items.results[randomChoosen];
-      let choosenInfo = await Tmdb.getMovieInfo(choosen.id, "tv");
-      setFeaturedData(choosenInfo);
-      console.log("info 1 movie", choosenInfo);
+      let chosen = originals[0].items.results[randomChosen];
+      let chosenInfo = await Tmdb.getMovieInfo(chosen.id, "tv");
+      setFeaturedData(chosenInfo);
+      console.log(chosenInfo);
     };
 
     loadAll();
-  }, []);
 
-  useEffect(() => {
     const scrollListener = () => {
       if (window.scrollY > 10) {
         setBalckHeader(true);
@@ -46,44 +50,20 @@ export default () => {
     };
   }, []);
   return (
-    <div className="page">
+    <NetflixProvider
+      value={{ filmChosen, setFilmChosen, featuredData, movieList }}
+    >
       <Header black={blackHeader} />
+      <Routes>
+        <Route>
+          <Route path="/" element={<Home />} />
+          <Route path="trending" element={<TrendingPage />} />
+          <Route path="movies" element={<Movies />} />
+          <Route path="tvshows" element={<TVShows />} />
+        </Route>
 
-      {featuredData && <FeaturedMovie item={featuredData} />}
-
-      <section className="lists">
-        {movieList.map((item, key) => (
-          <MovieRow key={key} title={item.title} items={item.items} />
-        ))}
-      </section>
-
-      <footer>
-        Feito com <span role="img">❤️</span> por{" "}
-        <strong>
-          <a href="https://danielmachado.netlify.app" target="_blank">
-            Daniel Machado
-          </a>
-        </strong>
-        <br />
-        Todos os direitos de imagem reservados para{" "}
-        <a href="https://netflix.com" target="_blank">
-          <strong>Netflix</strong>
-        </a>
-        <br />
-        Todos os dados foram obtidos através do{" "}
-        <a href="https://themoviedb.org" target="_blank">
-          <strong>The Movie DB</strong>
-        </a>
-      </footer>
-
-      {movieList.length <= 0 && (
-        <div className="loading">
-          <img
-            src="https://i.gifer.com/origin/36/36527397c208b977fa3ef21f68c0f7b2.gif"
-            alt="Carregando..."
-          />
-        </div>
-      )}
-    </div>
+        <Route path="*" element={<Error404 />} />
+      </Routes>
+    </NetflixProvider>
   );
 };

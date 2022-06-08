@@ -16,15 +16,13 @@ export default () => {
       setTrendingList(list);
       console.log("trendingList", list);
       /* chọn ngẫu nhiên phim Featured */
-      let randomChoosen = Math.floor(
+      let randomChosen = Math.floor(
         Math.random() * (list[0].items.results.length - 1)
       );
-      console.log(randomChoosen);
-      let choosen = list[0].items.results[randomChoosen];
-      let choosenInfo = await Tmdb.getMovieInfo(choosen.id, "movie");
-      setFeaturedData(choosenInfo);
-      console.log("info fetch từ listTrending", choosen);
-      console.log("info fetch riêng", choosenInfo);
+      console.log(randomChosen);
+      let chosen = list[0].items.results[randomChosen];
+      let chosenInfo = await Tmdb.getMovieInfo(chosen.id, "movie");
+      setFeaturedData(chosenInfo);
     };
     loadTrending();
   }, []);

@@ -1,12 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import Trending from "./components/TrendingPage";
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
-  <React.StrictMode>
+  <BrowserRouter>
     <App />
-    {/* <Trending /> */}
-  </React.StrictMode>,
+  </BrowserRouter>,
   document.getElementById("root")
 );
