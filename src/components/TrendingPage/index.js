@@ -14,12 +14,10 @@ export default () => {
       /* nhận danh sách phim Trending */
       let list = await Tmdb.getTrending();
       setTrendingList(list);
-      console.log("trendingList", list);
       /* chọn ngẫu nhiên phim Featured */
       let randomChosen = Math.floor(
         Math.random() * (list[0].items.results.length - 1)
       );
-      console.log(randomChosen);
       let chosen = list[0].items.results[randomChosen];
       let chosenInfo = await Tmdb.getMovieInfo(chosen.id, "movie");
       setFeaturedData(chosenInfo);
@@ -45,8 +43,6 @@ export default () => {
 
   return (
     <div className="page">
-      <Header black={blackHeader} />
-
       {featuredData && <FeaturedMovie item={featuredData} />}
 
       <section className="lists">

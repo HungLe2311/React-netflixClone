@@ -45,8 +45,6 @@ export default () => {
 
   return (
     <div className="page">
-      <Header black={blackHeader} />
-
       {featuredData && <FeaturedMovie item={featuredData} />}
 
       <section className="lists">

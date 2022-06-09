@@ -14,13 +14,13 @@ import "./Dialog.css";
 function CustomDialog() {
   const [open, setOpen] = React.useState(false);
   const { filmChosen } = React.useContext(NetflixContext);
-  const [chosenFilm, setChosenFilm] = React.useState(null);
+  const [chosenFilmInfo, setChosenFilmInfo] = React.useState(null);
   const handleClose = () => {
     setOpen(false);
   };
   const getChosen = async () => {
     const response = await Tmdb.getMovieInfo(filmChosen.id, filmChosen.type);
-    setChosenFilm(response);
+    setChosenFilmInfo(response);
   };
   React.useEffect(() => {
     if (filmChosen) {
@@ -31,14 +31,16 @@ function CustomDialog() {
 
   let firstDate = new Date();
   let genres = [];
-  if (chosenFilm) {
+  let creater = [];
+  if (chosenFilmInfo) {
+    console.log("chosenFilmInfo", chosenFilmInfo);
     firstDate = new Date(
-      chosenFilm.first_air_date
-        ? chosenFilm.first_air_date
-        : chosenFilm.release_date
+      chosenFilmInfo.first_air_date
+        ? chosenFilmInfo.first_air_date
+        : chosenFilmInfo.release_date
     );
-    for (let i in chosenFilm.genres) {
-      genres.push(chosenFilm.genres[i].name);
+    for (let i in chosenFilmInfo.genres) {
+      genres.push(chosenFilmInfo.genres[i].name);
     }
   }
 
@@ -51,12 +53,12 @@ function CustomDialog() {
       aria-describedby="scroll-dialog-description"
       maxWidth="md"
     >
-      {!chosenFilm && <CircularProgress />}
-      {chosenFilm && (
+      {!chosenFilmInfo && <CircularProgress />}
+      {chosenFilmInfo && (
         <div className="dialog">
           <DialogTitle id="scroll-dialog-title" className="close">
             <div className="featured--name">
-              {chosenFilm.name ? chosenFilm.name : chosenFilm.title}
+              {chosenFilmInfo.name ? chosenFilmInfo.name : chosenFilmInfo.title}
             </div>
             <DialogActions>
               <Button onClick={handleClose}>[Close]</Button>
@@ -69,22 +71,16 @@ function CustomDialog() {
                 style={{
                   backgroundSize: "cover",
                   backgroundPosition: "center",
-                  backgroundImage: `url(https://image.tmdb.org/t/p/original${chosenFilm.backdrop_path})`,
+                  backgroundImage: `url(https://image.tmdb.org/t/p/original${chosenFilmInfo.backdrop_path})`,
                 }}
               >
                 <div className="featured--vertical">
                   <div className="featured--horizontal">
                     <div className="featured--buttons1">
-                      <a
-                        className="featured--watchButton"
-                        href={`/watch/${chosenFilm.id}`}
-                      >
+                      <a className="featured--watchButton" href="/">
                         ▶ Play
                       </a>
-                      <a
-                        className="featured--myListButton"
-                        href={`/list/add/${chosenFilm.id}`}
-                      >
+                      <a className="featured--myListButton" href="/">
                         + My List
                       </a>
                     </div>
@@ -94,7 +90,7 @@ function CustomDialog() {
                     </div>
                     <div className="featured--info">
                       <div className="featured--points">
-                        {chosenFilm.vote_average} points
+                        {chosenFilmInfo.vote_average} points
                       </div>
                       <div className="featured--year1">
                         {firstDate.getFullYear()}
@@ -104,7 +100,7 @@ function CustomDialog() {
                 </div>
               </section>
               <div className="featured--description1">
-                {chosenFilm.overview}
+                {chosenFilmInfo.overview}
               </div>
             </DialogContentText>
           </DialogContent>

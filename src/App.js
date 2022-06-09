@@ -9,6 +9,7 @@ import { NetflixProvider } from "./context";
 import { Routes, Route, Link } from "react-router-dom";
 import Home from "./components/Home";
 import Error404 from "./components/Error404";
+import Dialog from "./components/Dialog";
 
 export default () => {
   const [movieList, setMovieList] = useState([]);
@@ -30,7 +31,7 @@ export default () => {
       let chosen = originals[0].items.results[randomChosen];
       let chosenInfo = await Tmdb.getMovieInfo(chosen.id, "tv");
       setFeaturedData(chosenInfo);
-      console.log(chosenInfo);
+      console.log("chosenInfo", chosenInfo);
     };
 
     loadAll();
@@ -54,6 +55,7 @@ export default () => {
       value={{ filmChosen, setFilmChosen, featuredData, movieList }}
     >
       <Header black={blackHeader} />
+      <Dialog />
       <Routes>
         <Route>
           <Route path="/" element={<Home />} />

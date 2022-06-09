@@ -1,7 +1,6 @@
 import React from "react";
-import ScrollDialog from "../Dialog";
 import "./Header.css";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 export default ({ black }) => {
   return (
@@ -16,15 +15,25 @@ export default ({ black }) => {
           </Link>
         </div>
         <div>
-          <Link to="/trending">Trending</Link>
+          <NavLink to="/" activeclassname="active">
+            Home
+          </NavLink>
         </div>
         <div>
-          <Link to="/movies">Movies</Link>
+          <NavLink to="/trending" activeclassname="active">
+            Trending
+          </NavLink>
         </div>
         <div>
-          <Link to="/tvshows">TV Shows</Link>
+          <NavLink activeclassname="active" to="/movies">
+            Movies
+          </NavLink>
         </div>
-        <ScrollDialog />
+        <div>
+          <NavLink activeclassname="active" to="/tvshows">
+            TV Shows
+          </NavLink>
+        </div>
       </div>
       <div className="header--user">
         <a href="/">

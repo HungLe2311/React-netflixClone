@@ -1,7 +1,10 @@
 import React from "react";
 import "./FeaturedMovie.css";
+import { useContext } from "react";
+import NetflixContext from "../../context";
 
 export default ({ item }) => {
+  const { setFilmChosen } = useContext(NetflixContext);
   let firstDate = new Date(
     item.first_air_date ? item.first_air_date : item.release_date
   );
@@ -39,12 +42,21 @@ export default ({ item }) => {
           </div>
           <div className="featured--description">{description}</div>
           <div className="featured--buttons">
-            <a className="featured--watchButton" href={`/watch/${item.id}`}>
+            <a className="featured--watchButton" href="/">
               ▶ Play
             </a>
-            <a className="featured--myListButton" href={`/list/add/${item.id}`}>
-              + My List
-            </a>
+            <div
+              className="featured--myListButton"
+              href="/"
+              onClick={() =>
+                setFilmChosen({
+                  id: item.id,
+                  type: item.name ? "tv" : "movie",
+                })
+              }
+            >
+              + More Info
+            </div>
           </div>
           <div className="featured--genres">
             <strong>Genres: </strong>

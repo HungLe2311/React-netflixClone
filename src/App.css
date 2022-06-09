@@ -47,3 +47,7 @@ footer a {
   margin-top: 10em;
   text-align: center;
 }
+
+a.active {
+  color: cyan;
+}
