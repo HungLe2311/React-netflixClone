@@ -42,12 +42,15 @@ export default ({ item }) => {
           </div>
           <div className="featured--description">{description}</div>
           <div className="featured--buttons">
-            <a className="featured--watchButton" href="/">
+            <a
+              className="featured--watchButton"
+              href={item.homepage}
+              target="_blank"
+            >
               ▶ Play
             </a>
             <div
               className="featured--myListButton"
-              href="/"
               onClick={() =>
                 setFilmChosen({
                   id: item.id,

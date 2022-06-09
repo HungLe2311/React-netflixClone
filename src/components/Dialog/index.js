@@ -31,9 +31,7 @@ function CustomDialog() {
 
   let firstDate = new Date();
   let genres = [];
-  let creater = [];
   if (chosenFilmInfo) {
-    console.log("chosenFilmInfo", chosenFilmInfo);
     firstDate = new Date(
       chosenFilmInfo.first_air_date
         ? chosenFilmInfo.first_air_date
@@ -77,10 +75,14 @@ function CustomDialog() {
                 <div className="featured--vertical">
                   <div className="featured--horizontal">
                     <div className="featured--buttons1">
-                      <a className="featured--watchButton" href="/">
+                      <a
+                        className="featured--watchButton"
+                        href={chosenFilmInfo.homepage}
+                        target="_blank"
+                      >
                         ▶ Play
                       </a>
-                      <a className="featured--myListButton" href="/">
+                      <a className="featured--myListButton" href="/error">
                         + My List
                       </a>
                     </div>
