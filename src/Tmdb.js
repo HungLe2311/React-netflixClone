@@ -154,4 +154,17 @@ export default {
 
     return info;
   },
+
+  getRecommendations: async (movieId, type) => {
+    switch (type) {
+      case "movie":
+        return await basicFetch(
+          `/movie/${movieId}/recommendations?api_key=${API_KEY}&language=en-US&page=1`
+        );
+      case "tv":
+        return await basicFetch(
+          `/tv/${movieId}/recommendations?api_key=${API_KEY}&language=en-US&page=1`
+        );
+    }
+  },
 };

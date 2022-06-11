@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useContext, useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -12,20 +13,27 @@ import { CircularProgress } from "@mui/material";
 import "./Dialog.css";
 
 function CustomDialog() {
-  const [open, setOpen] = React.useState(false);
-  const { filmChosen } = React.useContext(NetflixContext);
-  const [chosenFilmInfo, setChosenFilmInfo] = React.useState(null);
+  const [open, setOpen] = useState(false);
+  const { filmChosen, setFilmChosen } = useContext(NetflixContext);
+  const [chosenFilmInfo, setChosenFilmInfo] = useState(null);
+  const [recommendations, setRecommendations] = useState(null);
   const handleClose = () => {
     setOpen(false);
   };
   const getChosen = async () => {
-    const response = await Tmdb.getMovieInfo(filmChosen.id, filmChosen.type);
+    let response = await Tmdb.getMovieInfo(filmChosen.id, filmChosen.type);
     setChosenFilmInfo(response);
   };
-  React.useEffect(() => {
+  const getRecommendations = async () => {
+    let list = await Tmdb.getRecommendations(filmChosen.id, filmChosen.type);
+    setRecommendations(list);
+    console.log("recommendations", list);
+  };
+  useEffect(() => {
     if (filmChosen) {
       getChosen();
       setOpen(true);
+      getRecommendations();
     }
   }, [filmChosen]);
 
@@ -103,6 +111,26 @@ function CustomDialog() {
               </section>
               <div className="featured--description1">
                 {chosenFilmInfo.overview}
+              </div>
+
+              <div className="recommend">
+                <h3>More Like This</h3>
+                {recommendations?.results.map((item, key) => (
+                  <div
+                    key={key}
+                    className="movieRow--item"
+                    onClick={() =>
+                      setFilmChosen({
+                        id: item.id,
+                        type: item.name ? "tv" : "movie",
+                      })
+                    }
+                  >
+                    <img
+                      src={`https://image.tmdb.org/t/p/w300${item.poster_path}`}
+                    />
+                  </div>
+                ))}
               </div>
             </DialogContentText>
           </DialogContent>
