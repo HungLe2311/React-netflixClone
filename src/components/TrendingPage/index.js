@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Tmdb from "../../Tmdb";
 import MovieRow from "../MovieRow";
 import FeaturedMovie from "../FeaturedMovie";
-import Header from "../Header";
+import NetflixContext from "../../context";
+
 import "../../App.css";
 export default () => {
   const [trendingList, setTrendingList] = useState([]);
   const [featuredData, setFeaturedData] = useState(null);
-  const [blackHeader, setBalckHeader] = useState(false);
+  const { searchValue, createSearchList, setFilmChosen } =
+    useContext(NetflixContext);
 
   useEffect(() => {
     const loadTrending = async () => {
@@ -25,23 +27,7 @@ export default () => {
     loadTrending();
   }, []);
 
-  useEffect(() => {
-    const scrollListener = () => {
-      if (window.scrollY > 10) {
-        setBalckHeader(true);
-      } else {
-        setBalckHeader(false);
-      }
-    };
-
-    window.addEventListener("scroll", scrollListener);
-
-    return () => {
-      window.removeEventListener("scroll", scrollListener);
-    };
-  }, []);
-
-  return (
+  return !searchValue.isSearch ? (
     <div className="page">
       {featuredData && <FeaturedMovie item={featuredData} />}
 
@@ -58,6 +44,23 @@ export default () => {
           />
         </div>
       )}
+    </div>
+  ) : (
+    <div className="search-mode">
+      {createSearchList(trendingList).map((item, key) => (
+        <div
+          key={key}
+          className="movieRow--item"
+          onClick={() =>
+            setFilmChosen({
+              id: item.id,
+              type: item.name ? "tv" : "movie",
+            })
+          }
+        >
+          <img src={`https://image.tmdb.org/t/p/w300${item.poster_path}`} />
+        </div>
+      ))}
     </div>
   );
 };

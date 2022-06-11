@@ -111,4 +111,4 @@ function CustomDialog() {
     </Dialog>
   );
 }
-export default React.memo(CustomDialog);
+export default CustomDialog;

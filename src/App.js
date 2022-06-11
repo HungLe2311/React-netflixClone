@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Tmdb from "./Tmdb";
 import Movies from "./components/Movies";
 import TVShows from "./components/TVShows";
 import TrendingPage from "./components/TrendingPage";
@@ -12,30 +11,14 @@ import Error404 from "./components/Error404";
 import Dialog from "./components/Dialog";
 
 export default () => {
-  const [movieList, setMovieList] = useState([]);
-  const [featuredData, setFeaturedData] = useState(null);
   const [blackHeader, setBalckHeader] = useState(false);
   const [filmChosen, setFilmChosen] = useState();
+  let [searchValue, setSearchValue] = useState({
+    value: "",
+    isSearch: false,
+  });
 
   useEffect(() => {
-    const loadAll = async () => {
-      /* nhận danh sách Home */
-      let list = await Tmdb.getHomeList();
-      setMovieList(list);
-      console.log("homeList", list);
-      /* chọn ngẫu nhiên phim Featured */
-      let originals = list.filter((i) => i.slug === "originals");
-      let randomChosen = Math.floor(
-        Math.random() * (originals[0].items.results?.length - 1)
-      );
-      let chosen = originals[0].items.results[randomChosen];
-      let chosenInfo = await Tmdb.getMovieInfo(chosen.id, "tv");
-      setFeaturedData(chosenInfo);
-      console.log("chosenInfo", chosenInfo);
-    };
-
-    loadAll();
-
     const scrollListener = () => {
       if (window.scrollY > 10) {
         setBalckHeader(true);
@@ -50,9 +33,46 @@ export default () => {
       window.removeEventListener("scroll", scrollListener);
     };
   }, []);
+
+  let handleSearchChange = (data) => {
+    if (data != "")
+      setSearchValue({
+        value: data,
+        isSearch: true,
+      });
+    else
+      setSearchValue({
+        value: data,
+        isSearch: false,
+      });
+    console.log(data);
+  };
+
+  let createSearchList = (dataList) => {
+    let keySearch = searchValue.value.toLowerCase();
+    let tempSearch = [];
+    for (let e of dataList) {
+      for (let e2 of e.items.results) tempSearch.push(e2);
+    }
+    let searchList = tempSearch.filter(
+      (item) =>
+        item.title?.toLowerCase().includes(keySearch) ||
+        item.name?.toLowerCase().includes(keySearch)
+    );
+    console.log("searchList", searchList, "searchValue", searchValue.value);
+    return searchList;
+  };
+
   return (
     <NetflixProvider
-      value={{ filmChosen, setFilmChosen, featuredData, movieList }}
+      value={{
+        filmChosen,
+        setFilmChosen,
+        searchValue,
+        setSearchValue,
+        handleSearchChange,
+        createSearchList,
+      }}
     >
       <Header black={blackHeader} />
       <Dialog />

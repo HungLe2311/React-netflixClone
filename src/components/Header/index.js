@@ -1,8 +1,13 @@
 import React from "react";
 import "./Header.css";
 import { Link, NavLink } from "react-router-dom";
+import NetflixContext from "../../context";
+import { useContext } from "react";
+import { Check } from "@mui/icons-material";
 
 export default ({ black }) => {
+  const { handleSearchChange } = useContext(NetflixContext);
+
   return (
     <header className={black ? "black" : ""}>
       <div className="menu">
@@ -35,14 +40,24 @@ export default ({ black }) => {
           </NavLink>
         </div>
       </div>
-      <div className="header--user">
+      <div>
+        <input
+          className="search_box"
+          onChange={(e) => {
+            handleSearchChange(e.target.value);
+          }}
+          type="text"
+          placeholder="Search"
+        />
+      </div>
+      {/* <div className="header--user">
         <a href="/">
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png"
             alt="User"
           />
         </a>
-      </div>
+      </div> */}
     </header>
   );
 };
