@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { Check } from "@mui/icons-material";
 
 export default ({ black }) => {
-  const { handleSearchChange } = useContext(NetflixContext);
+  const { handleSearchChange, searchValue } = useContext(NetflixContext);
 
   return (
     <header className={black ? "black" : ""}>
@@ -48,6 +48,7 @@ export default ({ black }) => {
           }}
           type="text"
           placeholder="Search"
+          value={searchValue.value}
         />
       </div>
       {/* <div className="header--user">

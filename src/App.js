@@ -5,7 +5,7 @@ import TrendingPage from "./components/TrendingPage";
 import Header from "./components/Header";
 import "./App.css";
 import { NetflixProvider } from "./context";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useLocation } from "react-router-dom";
 import Home from "./components/Home";
 import Error404 from "./components/Error404";
 import Dialog from "./components/Dialog";
@@ -13,10 +13,14 @@ import Dialog from "./components/Dialog";
 export default () => {
   const [blackHeader, setBalckHeader] = useState(false);
   const [filmChosen, setFilmChosen] = useState();
+  const { pathname } = useLocation();
   let [searchValue, setSearchValue] = useState({
     value: "",
     isSearch: false,
   });
+  useEffect(() => {
+    setSearchValue({ value: "", isSearch: false });
+  }, [pathname]);
 
   useEffect(() => {
     const scrollListener = () => {
@@ -45,7 +49,6 @@ export default () => {
         value: data,
         isSearch: false,
       });
-    console.log(data);
   };
 
   let createSearchList = (dataList) => {
