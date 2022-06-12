@@ -12,7 +12,6 @@ export default {
     let moviesList = await basicFetch(
       `/genre/movie/list?api_key=${API_KEY}&language=en-US`
     );
-    console.log("moviesList", moviesList);
     let results = [];
     for (const e of moviesList.genres) {
       results.push({
@@ -23,7 +22,6 @@ export default {
         ),
       });
     }
-    console.log(results);
     return results;
   },
 
@@ -41,7 +39,6 @@ export default {
         ),
       });
     }
-    console.log(results);
     return results;
   },
 

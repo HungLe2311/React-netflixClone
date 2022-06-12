@@ -5,10 +5,11 @@ import TrendingPage from "./components/TrendingPage";
 import Header from "./components/Header";
 import "./App.css";
 import { NetflixProvider } from "./context";
-import { Routes, Route, Link, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Home from "./components/Home";
 import Error404 from "./components/Error404";
 import Dialog from "./components/Dialog";
+import useDebounce from "./components/Usedebounce";
 
 export default () => {
   const [blackHeader, setBalckHeader] = useState(false);
@@ -18,6 +19,7 @@ export default () => {
     value: "",
     isSearch: false,
   });
+
   useEffect(() => {
     setSearchValue({ value: "", isSearch: false });
   }, [pathname]);
@@ -30,26 +32,25 @@ export default () => {
         setBalckHeader(false);
       }
     };
-
     window.addEventListener("scroll", scrollListener);
-
     return () => {
       window.removeEventListener("scroll", scrollListener);
     };
   }, []);
 
-  let handleSearchChange = (data) => {
-    if (data != "")
+  const debouncedSearchTerm = useDebounce(searchValue.value, 500);
+  useEffect(() => {
+    if (debouncedSearchTerm)
       setSearchValue({
-        value: data,
+        value: debouncedSearchTerm,
         isSearch: true,
       });
     else
       setSearchValue({
-        value: data,
+        value: debouncedSearchTerm,
         isSearch: false,
       });
-  };
+  }, [debouncedSearchTerm]);
 
   let createSearchList = (dataList) => {
     let keySearch = searchValue.value.toLowerCase();
@@ -62,7 +63,6 @@ export default () => {
         item.title?.toLowerCase().includes(keySearch) ||
         item.name?.toLowerCase().includes(keySearch)
     );
-    console.log("searchList", searchList, "searchValue", searchValue.value);
     return searchList;
   };
 
@@ -73,7 +73,6 @@ export default () => {
         setFilmChosen,
         searchValue,
         setSearchValue,
-        handleSearchChange,
         createSearchList,
       }}
     >

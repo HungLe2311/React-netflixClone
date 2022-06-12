@@ -16,7 +16,6 @@ export default () => {
       /* nhận danh sách Home */
       let list = await Tmdb.getHomeList();
       setHomeList(list);
-      console.log("homeList", list);
       /* chọn ngẫu nhiên phim Featured */
       let originals = list.filter((i) => i.slug === "originals");
       let randomChosen = Math.floor(
@@ -25,7 +24,6 @@ export default () => {
       let chosen = originals[0].items.results[randomChosen];
       let chosenInfo = await Tmdb.getMovieInfo(chosen.id, "tv");
       setFeaturedData(chosenInfo);
-      console.log("chosenInfo", chosenInfo);
     };
     loadAll();
   }, []);

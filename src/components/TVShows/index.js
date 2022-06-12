@@ -21,7 +21,6 @@ export default () => {
       let randomChosen = Math.floor(
         Math.random() * (list[randomList].items.results.length - 1)
       );
-      console.log(randomChosen);
       let chosen = list[randomList].items.results[randomChosen];
       let chosenInfo = await Tmdb.getMovieInfo(chosen.id, "movie");
       setFeaturedData(chosenInfo);

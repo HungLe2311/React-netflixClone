@@ -1,12 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Header.css";
 import { Link, NavLink } from "react-router-dom";
 import NetflixContext from "../../context";
-import { useContext } from "react";
-import { Check } from "@mui/icons-material";
 
 export default ({ black }) => {
-  const { handleSearchChange, searchValue } = useContext(NetflixContext);
+  const { searchValue, setSearchValue } = useContext(NetflixContext);
 
   return (
     <header className={black ? "black" : ""}>
@@ -44,7 +42,8 @@ export default ({ black }) => {
         <input
           className="search_box"
           onChange={(e) => {
-            handleSearchChange(e.target.value);
+            // handleSearchChange(e.target.value);
+            setSearchValue({ value: e.target.value });
           }}
           type="text"
           placeholder="Search"

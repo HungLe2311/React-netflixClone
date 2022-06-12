@@ -27,7 +27,6 @@ function CustomDialog() {
   const getRecommendations = async () => {
     let list = await Tmdb.getRecommendations(filmChosen.id, filmChosen.type);
     setRecommendations(list);
-    console.log("recommendations", list);
   };
   useEffect(() => {
     if (filmChosen) {

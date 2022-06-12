@@ -3,8 +3,8 @@ import Tmdb from "../../Tmdb";
 import MovieRow from "../MovieRow";
 import FeaturedMovie from "../FeaturedMovie";
 import NetflixContext from "../../context";
-
 import "../../App.css";
+
 export default () => {
   const [trendingList, setTrendingList] = useState([]);
   const [featuredData, setFeaturedData] = useState(null);
