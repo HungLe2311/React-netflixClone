@@ -9,7 +9,6 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Home from "./components/Home";
 import Error404 from "./components/Error404";
 import Dialog from "./components/Dialog";
-import useDebounce from "./components/Usedebounce";
 
 export default () => {
   const [blackHeader, setBalckHeader] = useState(false);
@@ -19,7 +18,6 @@ export default () => {
     value: "",
     isSearch: false,
   });
-
   useEffect(() => {
     setSearchValue({ value: "", isSearch: false });
   }, [pathname]);
@@ -37,20 +35,6 @@ export default () => {
       window.removeEventListener("scroll", scrollListener);
     };
   }, []);
-
-  const debouncedSearchTerm = useDebounce(searchValue.value, 500);
-  useEffect(() => {
-    if (debouncedSearchTerm)
-      setSearchValue({
-        value: debouncedSearchTerm,
-        isSearch: true,
-      });
-    else
-      setSearchValue({
-        value: debouncedSearchTerm,
-        isSearch: false,
-      });
-  }, [debouncedSearchTerm]);
 
   let createSearchList = (dataList) => {
     let keySearch = searchValue.value.toLowerCase();

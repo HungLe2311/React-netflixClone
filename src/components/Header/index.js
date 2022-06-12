@@ -1,10 +1,27 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Header.css";
 import { Link, NavLink } from "react-router-dom";
 import NetflixContext from "../../context";
+import useDebounce from "../Usedebounce";
 
 export default ({ black }) => {
-  const { searchValue, setSearchValue } = useContext(NetflixContext);
+  const { setSearchValue } = useContext(NetflixContext);
+  const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+  useEffect(() => {
+    if (debouncedSearchTerm) {
+      setSearchValue({
+        value: debouncedSearchTerm,
+        isSearch: true,
+      });
+    } else {
+      setSearchValue({
+        value: debouncedSearchTerm,
+        isSearch: false,
+      });
+    }
+  }, [debouncedSearchTerm]);
 
   return (
     <header className={black ? "black" : ""}>
@@ -41,13 +58,10 @@ export default ({ black }) => {
       <div>
         <input
           className="search_box"
-          onChange={(e) => {
-            // handleSearchChange(e.target.value);
-            setSearchValue({ value: e.target.value });
-          }}
+          onChange={(e) => setSearchTerm(e.target.value)}
           type="text"
           placeholder="Search"
-          value={searchValue.value}
+          value={searchTerm}
         />
       </div>
       {/* <div className="header--user">
